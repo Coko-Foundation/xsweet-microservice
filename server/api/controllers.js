@@ -1,9 +1,11 @@
 const fs = require('fs-extra')
 const { boss, logger } = require('@coko/server')
+
 const {
   DOCXToHTMLSyncHandler,
   DOCXToHTMLAndSplitSyncHandler,
 } = require('./useCase')
+
 const {
   DOCX_TO_HTML_AND_SPLIT_JOB,
   DOCX_TO_HTML_JOB,
@@ -15,16 +17,13 @@ const DOCXToHTMLAsyncController = async (req, res) => {
     if (req.fileValidationError) {
       return res.status(400).json({ msg: req.fileValidationError })
     }
+
     if (!req.file) {
       return res.status(400).json({ msg: 'docx file is not included' })
     }
 
-    const {
-      serviceCallbackTokenId,
-      objectId,
-      responseToken,
-      callbackURL,
-    } = req.body
+    const { serviceCallbackTokenId, objectId, responseToken, callbackURL } =
+      req.body
 
     const useMath = req.body?.useMath === 'true'
     const useBox = req.body?.useBox === 'true'
@@ -32,12 +31,15 @@ const DOCXToHTMLAsyncController = async (req, res) => {
     if (!serviceCallbackTokenId) {
       throw new Error(`request's parameter serviceCallbackTokenId is required`)
     }
+
     if (!objectId) {
       throw new Error(`request's parameter objectId is required`)
     }
+
     if (!responseToken) {
       throw new Error(`request's parameter responseToken is required`)
     }
+
     if (!callbackURL) {
       throw new Error(`request's parameter callbackURL is required`)
     }
@@ -53,7 +55,7 @@ const DOCXToHTMLAsyncController = async (req, res) => {
       objectId,
       responseToken,
       useMath,
-      useBox
+      useBox,
     })
 
     return res.status(200).json({
@@ -73,6 +75,7 @@ const DOCXToHTMLSyncController = async (req, res) => {
     if (req.fileValidationError) {
       return res.status(400).json({ msg: req.fileValidationError })
     }
+
     if (!req.file) {
       return res.status(400).json({ msg: 'docx file is not included' })
     }
@@ -102,6 +105,7 @@ const DOCXToHTMLAndSplitAsyncController = async (req, res) => {
     if (req.fileValidationError) {
       return res.status(400).json({ msg: req.fileValidationError })
     }
+
     if (!req.file) {
       return res.status(400).json({ msg: 'docx file is not included' })
     }
@@ -118,6 +122,7 @@ const DOCXToHTMLAndSplitAsyncController = async (req, res) => {
     if (!responseToken) {
       throw new Error(`request's parameter responseToken is required`)
     }
+
     if (!callbackURL) {
       throw new Error(`request's parameter callbackURL is required`)
     }
@@ -133,7 +138,7 @@ const DOCXToHTMLAndSplitAsyncController = async (req, res) => {
       serviceCallbackTokenId,
       responseToken,
       useMath,
-      useBox
+      useBox,
     })
 
     return res.status(200).json({
@@ -152,6 +157,7 @@ const DOCXToHTMLAndSplitSyncController = async (req, res) => {
     if (req.fileValidationError) {
       return res.status(400).json({ msg: req.fileValidationError })
     }
+
     if (!req.file) {
       return res.status(400).json({ msg: 'docx file is not included' })
     }
@@ -163,7 +169,12 @@ const DOCXToHTMLAndSplitSyncController = async (req, res) => {
 
     const useMath = req.body?.useMath === 'true'
     const useBox = req.body?.useBox === 'true'
-    const chapters = await DOCXToHTMLAndSplitSyncHandler(filePath, useMath, useBox)
+
+    const chapters = await DOCXToHTMLAndSplitSyncHandler(
+      filePath,
+      useMath,
+      useBox,
+    )
 
     return res.status(200).json({
       chapters,

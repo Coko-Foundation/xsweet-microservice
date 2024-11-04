@@ -17,6 +17,7 @@ const getTexFiles = async xmlFiles => {
   const texFiles = {}
 
   const texFilesList = Object.keys(xmlFiles)
+
   for (let i = 0; i < texFilesList.length; i += 1) {
     const thisFilename = texFilesList[i]
     const thisXml = xmlFiles[thisFilename]
@@ -26,6 +27,7 @@ const getTexFiles = async xmlFiles => {
       texFiles[thisFilename] = thisXml
         .split(/<tex display="[a-z]*">/)[1]
         .split('</tex>')[0]
+
       // logger.info('found TeX: ', texFiles[i])
       if (texFiles[thisFilename].match(/<[a-z_]+>/)) {
         // If we are here, there are XML tags in the TeX. Let's try to remove them.
@@ -42,6 +44,7 @@ const getTexFiles = async xmlFiles => {
           .replaceAll(/<nudge>[\s\S]*?<\/nudge>/g, '')
           .replaceAll(/<color_def>[\s\S]*?<\/color_def>/g, '')
           .replaceAll(/<color>[\s\S]*?<\/color>/g, '')
+
         if (texFiles[thisFilename].match(/<[a-z_]+>/)) {
           logger.info(`\nFound XML tag in LaTeX: ${texFiles[thisFilename]}`)
         }
@@ -58,6 +61,7 @@ const getTexFiles = async xmlFiles => {
       errorList.push(thisFilename)
     }
   }
+
   return { texFiles, errorList }
 }
 
@@ -113,6 +117,7 @@ const reintegrateMathType = async (html, texFilesList) => {
         const myImage = src.split('/').pop().split('.')[0]
         // Check if the parent is a paragraph, and if so, wrap it in inline?
         const parentTag = $(elem).parent().prop('tagName').toLowerCase()
+
         if (parentTag === 'p') {
           // I am using fake tags to avoid the later math fixing, these are replaced after the math-fixing has been run.
           $(elem).replaceWith(`<math@inline>${texFiles[myImage]}</math@inline>`)

@@ -20,6 +20,7 @@ const imagesHandler = html => {
   const $ = cheerio.load(html)
   $('img[src]').each((i, elem) => {
     const $elem = $(elem)
+
     if ($elem.attr('src').includes('file:')) {
       let filePath = $elem.attr('src').split(':')[1].replace(/\/\//, '/')
 
@@ -27,6 +28,7 @@ const imagesHandler = html => {
         filePath = $elem.attr('src').split(':')[1].replace('word', '')
         filePath.replace(/\/\//, '/')
       }
+
       const ext = filePath.slice(filePath.lastIndexOf('.') + 1, filePath.length)
       $elem.attr(
         'src',
@@ -44,6 +46,7 @@ const boxFixer = html => {
   const $ = cheerio.load(html)
   $('p').each((i, elem) => {
     const $elem = $(elem)
+
     if ($elem.attr('data-style')) {
       $elem.attr('class', 'paragraph')
       $elem.wrap('<aside class="short note"></aside>')
@@ -81,6 +84,7 @@ const contentFixer = html => {
   const $ = cheerio.load(html)
   $('p').each((i, elem) => {
     const $elem = $(elem)
+
     if (!$elem.attr('class')) {
       $elem.attr('class', 'paragraph')
     }
@@ -108,8 +112,10 @@ const fileFilter = (req, file, cb) => {
     req.fileValidationError = 'Only docx files are allowed!'
     return cb(null, false)
   }
+
   return cb(null, true)
 }
+
 const uploadHandler = multer({ storage, fileFilter }).single('docx')
 
 const readFile = (filePath, encoding = undefined) =>
@@ -119,6 +125,7 @@ const readFile = (filePath, encoding = undefined) =>
         if (err) {
           return reject(err)
         }
+
         return resolve(data)
       })
     } else {
@@ -126,6 +133,7 @@ const readFile = (filePath, encoding = undefined) =>
         if (err) {
           return reject(err)
         }
+
         return resolve(data)
       })
     }
@@ -137,6 +145,7 @@ const writeFile = (filePath, data) =>
       if (err) {
         return reject(err)
       }
+
       return resolve(true)
     })
   })

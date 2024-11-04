@@ -1,4 +1,5 @@
 const { startServer, boss, logger } = require('@coko/server')
+
 const {
   DOCXToHTMLAsyncHandler,
   DOCXToHTMLAndSplitAsyncHandler,
@@ -15,6 +16,7 @@ const init = async () => {
   startServer().then(async () => {
     boss.subscribe(DOCX_TO_HTML_JOB, async job => {
       const { data } = job
+
       const {
         filePath,
         callbackURL,
@@ -30,6 +32,7 @@ const init = async () => {
         objectId,
         responseToken,
       }
+
       await DOCXToHTMLAsyncHandler(filePath, responseParams, useMath)
       return true
     })
@@ -53,6 +56,7 @@ const init = async () => {
         serviceCallbackTokenId,
         responseToken,
       }
+
       await DOCXToHTMLAndSplitAsyncHandler(filePath, responseParams, useMath)
       return true
     })
