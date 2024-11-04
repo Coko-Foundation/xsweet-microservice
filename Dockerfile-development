@@ -19,10 +19,11 @@ RUN chown -R node:node /home/node/xsweet
 
 USER node
 
+COPY --chown=node:node .yarnrc.yml .
 COPY --chown=node:node package.json ./package.json
 COPY --chown=node:node yarn.lock ./yarn.lock
 
-RUN yarn
+RUN yarn install --immutable
 
 COPY --chown=node:node . .
 

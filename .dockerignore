@@ -9,3 +9,7 @@ docker-compose.*.yml
 Dockerfile
 logs
 *.log
+
+.yarn/cache
+.yarn/install-state.gz
+!.yarnrc.yml
