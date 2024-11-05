@@ -1,9 +1,7 @@
 database
 node_modules
 temp
-.*
 config/*.env
-*.config.*
 docker-compose.yml
 docker-compose.*.yml
 Dockerfile

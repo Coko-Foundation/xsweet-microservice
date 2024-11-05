@@ -1,0 +1,46 @@
+variables:
+  IMAGE_NAME: cokoapps/xsweet/xsweet-dev
+  TAG: $CI_REGISTRY/$IMAGE_NAME:$CI_COMMIT_REF_NAME.$CI_COMMIT_SHA
+
+stages:
+  - Build development
+  - Lint & Test
+  - Release
+
+build:
+  stage: Build development
+  image: docker:27
+  services:
+    - docker:27-dind
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login "$CI_REGISTRY" -u "$CI_REGISTRY_USER" --password-stdin
+  script:
+    - docker build -f Dockerfile-development --tag $TAG .
+    - docker push $TAG
+
+lint:
+  stage: Lint & Test
+  image: $TAG
+  script:
+    - cd /home/node/xsweet
+    - yarn coko-lint run --skip-stylelint
+
+release:
+  stage: Release
+  image: cokoapps/release-docker:20
+  services:
+    - docker:27-dind
+  only:
+    - main
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ''
+    GIT_AUTHOR_NAME: $RELEASE_BOT_NAME
+    GIT_AUTHOR_EMAIL: $RELEASE_BOT_EMAIL
+    GIT_COMMITTER_NAME: $RELEASE_BOT_NAME
+    GIT_COMMITTER_EMAIL: $RELEASE_BOT_EMAIL
+    GITLAB_TOKEN: $RELEASE_BOT_TOKEN
+  before_script:
+    - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+  script:
+    - npx semantic-release

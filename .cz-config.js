@@ -1,5 +1,10 @@
 const { commitizen } = require('@coko/lint')
 
-commitizen.scopes = ['service', '*']
+const modified = {
+  ...commitizen,
+  skipQuestions: ['body', 'footer'], // do NOT skip 'breaking'
+  scopes: ['service', '*'],
+  askForBreakingChangeFirst: true,
+}
 
-module.exports = commitizen
+module.exports = modified

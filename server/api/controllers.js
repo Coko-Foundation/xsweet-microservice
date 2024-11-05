@@ -1,5 +1,6 @@
 const fs = require('fs-extra')
-const { boss, logger } = require('@coko/server')
+
+const { jobManager, logger } = require('@coko/server')
 
 const {
   DOCXToHTMLSyncHandler,
@@ -45,10 +46,12 @@ const DOCXToHTMLAsyncController = async (req, res) => {
     }
 
     const { path: filePath } = req.file
+
     logger.info(
       `${MICROSERVICE_NAME} controller(DOCXToHTMLAsyncController): publishes a job to the ${DOCX_TO_HTML_JOB} queue`,
     )
-    await boss.publish(DOCX_TO_HTML_JOB, {
+
+    await jobManager.sendToQueue(DOCX_TO_HTML_JOB, {
       filePath,
       callbackURL,
       serviceCallbackTokenId,
@@ -132,7 +135,7 @@ const DOCXToHTMLAndSplitAsyncController = async (req, res) => {
       `${MICROSERVICE_NAME} controller(DOCXToHTMLAndSplitAsyncController): publishes a job to the ${DOCX_TO_HTML_AND_SPLIT_JOB} queue`,
     )
 
-    await boss.publish(DOCX_TO_HTML_AND_SPLIT_JOB, {
+    await jobManager.sendToQueue(DOCX_TO_HTML_AND_SPLIT_JOB, {
       filePath,
       callbackURL,
       serviceCallbackTokenId,

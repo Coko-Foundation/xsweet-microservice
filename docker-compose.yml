@@ -8,47 +8,24 @@ services:
     ports:
       - ${SERVER_PORT:-3000}:${SERVER_PORT:-3000}
     environment:
-      - PUBSWEET_SECRET=${PUBSWEET_SECRET:-dev_secret}
+      - NODE_ENV=development
+      - SECRET=${SECRET:-dev_secret}
       - SERVER_PORT=${SERVER_PORT:-3000}
-      - SERVER_HOST=${SERVER_HOST:-server}
-      - SERVER_PROTOCOL=${SERVER_PROTOCOL:-http}
+      - POSTGRES_HOST=${POSTGRES_HOST:-db}
+      - POSTGRES_PORT=${POSTGRES_PORT:-5432}
+      - POSTGRES_DB=${POSTGRES_DB:-xsweet_dev_db}
       - POSTGRES_USER=${POSTGRES_USER:-xsweet_user_dev}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-secretpassword}
-      - POSTGRES_HOST=${POSTGRES_HOST:-db}
-      - POSTGRES_DB=${POSTGRES_DB:-xsweet_dev_db}
-      - POSTGRES_PORT=${POSTGRES_PORT:-5432}
-      - NODE_ENV=development
-    entrypoint:
-      [
-        'sh',
-        'scripts/wait-for-it',
-        'db:5432',
-        '--',
-        'sh',
-        'scripts/setupDevServer.sh',
-      ]
-    command:
-      [
-        'node_modules/.bin/nodemon',
-        './server/startServer.js',
-        '--watch',
-        'server',
-        '--watch',
-        'config',
-        '--ext',
-        'js,graphql',
-      ]
+    command: ['yarn', 'coko-server', 'start-dev']
     volumes:
       - ./server:/home/node/xsweet/server
       - ./config:/home/node/xsweet/config
 
   db:
-    image: postgres:14.4-alpine
+    image: postgres:16-alpine
     ports:
       - ${POSTGRES_PORT:-5432}:5432
     environment:
+      - POSTGRES_DB=${POSTGRES_DB:-xsweet_dev_db}
       - POSTGRES_USER=${POSTGRES_USER:-xsweet_user_dev}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-secretpassword}
-      - POSTGRES_DB=${POSTGRES_DB:-xsweet_dev_db}
-    volumes:
-      - ./scripts/init-pgboss.sql:/docker-entrypoint-initdb.d/init-pgboss.sql
