@@ -7,6 +7,7 @@ const axios = require('axios')
 const path = require('path')
 const { MICROSERVICE_NAME } = require('./constants')
 const { reintegrateMathType } = require('./mathtype')
+
 const {
   readFile,
   writeFile,
@@ -20,19 +21,23 @@ const {
 const checkForFiles = async (startPath, extension) => {
   // This returns a list of paths to WMF files. If there are no WMF files, it returns an empty list.
   const wmfList = []
+
   if (!fs.existsSync(startPath)) {
     // logger.info('No word/media folder!')
     return []
   }
 
   const files = fs.readdirSync(startPath)
+
   for (let i = 0; i < files.length; i += 1) {
     const filename = path.join(startPath, files[i])
+
     if (filename.endsWith(extension)) {
       // logger.info('WMF file found! ', filename)
       wmfList.push(filename)
     }
   }
+
   return wmfList
 }
 
@@ -50,6 +55,7 @@ const DOCXToHTMLSyncHandler = async (
       unsafeCleanup: true,
       dir: process.cwd(),
     })
+
     cleaner = cleanup
     const buf = await readFile(filePath)
 
@@ -66,6 +72,7 @@ const DOCXToHTMLSyncHandler = async (
           if (error) {
             reject(error)
           }
+
           resolve(stdout)
         },
       )
@@ -86,6 +93,7 @@ const DOCXToHTMLSyncHandler = async (
         [],
         { shell: true },
       )
+
       xsweet.stdout.on('data', data => {
         logger.info(`stdout: ${data}`)
       })
@@ -118,6 +126,7 @@ const DOCXToHTMLSyncHandler = async (
       // At this point, look in tmpDir/word/media to see if there are any WMF files there. If so . . .
       logger.info(`${MICROSERVICE_NAME} Checking for WMF files!`)
       const wmfFilesFound = await checkForFiles(`${tmpDir}/word/media/`, '.wmf')
+
       if (wmfFilesFound.length > 0) {
         logger.info('WMF files found, converting...')
         await new Promise((resolve, reject) => {
@@ -132,6 +141,7 @@ const DOCXToHTMLSyncHandler = async (
             [],
             { shell: true },
           )
+
           wmfProcess.stdout.on('data', data => {
             logger.info(`stdout: ${data}`)
           })
@@ -151,12 +161,14 @@ const DOCXToHTMLSyncHandler = async (
             resolve(code)
           })
         })
+
         // Check if we have .xml files in the tmpDir/word/media/tex folder
         // If so, send them to a function that reinserts them.
         const texFilesFound = await checkForFiles(
           `${tmpDir}/word/media/tex/`,
           '.xml',
         )
+
         if (texFilesFound.length > 0) {
           logger.info('TeX files generated!')
           html = await reintegrateMathType(html, texFilesFound)
@@ -169,13 +181,17 @@ const DOCXToHTMLSyncHandler = async (
     )
 
     const cleanedFromImages = imagesHandler(html)
+
     const fixedContent = useBox
       ? contentFixer(boxFixer(cleanedFromImages))
       : contentFixer(cleanedFromImages)
+
     const cleanedMath = useMathCleaner ? mathFixer(fixedContent) : fixedContent
+
     const passThroughWMF = cleanedMath
       .replaceAll('math@display', 'math-display')
       .replaceAll('math@inline', 'math-inline')
+
     const cleanedBoxes = useBox ? boxFixer(passThroughWMF) : passThroughWMF
     return cleanedBoxes
   } catch (e) {
@@ -184,6 +200,7 @@ const DOCXToHTMLSyncHandler = async (
     if (cleaner) {
       await cleaner()
     }
+
     await fs.remove(filePath)
     logger.info(
       `${MICROSERVICE_NAME} use-case(DOCXToHTMLSyncHandler): removes tmp folders and docx file`,
@@ -197,12 +214,9 @@ const DOCXToHTMLAsyncHandler = async (
   useMathCleaner = undefined,
   useBox = undefined,
 ) => {
-  const {
-    callbackURL,
-    serviceCallbackTokenId,
-    objectId,
-    responseToken,
-  } = responseParams
+  const { callbackURL, serviceCallbackTokenId, objectId, responseToken } =
+    responseParams
+
   try {
     // getting tmpDir here, is this okay?
     const { path: tmpDir } = await tmp.dir({
@@ -221,6 +235,7 @@ const DOCXToHTMLAsyncHandler = async (
       // At this point, look in tmpDir/word/media to see if there are any WMF files there. If so . . .
       logger.info(`${MICROSERVICE_NAME} Checking for WMF files!`)
       const wmfFilesFound = await checkForFiles(`${tmpDir}/word/media/`, '.wmf')
+
       if (wmfFilesFound.length > 0) {
         logger.info('WMF files found, converting...')
         await new Promise((resolve, reject) => {
@@ -235,6 +250,7 @@ const DOCXToHTMLAsyncHandler = async (
             [],
             { shell: true },
           )
+
           wmfProcess.stdout.on('data', data => {
             logger.info(`stdout: ${data}`)
           })
@@ -254,12 +270,14 @@ const DOCXToHTMLAsyncHandler = async (
             resolve(code)
           })
         })
+
         // Check if we have .xml files in the tmpDir/word/media/tex folder
         // If so, send them to a function that reinserts them.
         const texFilesFound = await checkForFiles(
           `${tmpDir}/word/media/tex/`,
           '.xml',
         )
+
         if (texFilesFound.length > 0) {
           logger.info('TeX files generated!')
           html = await reintegrateMathType(html, texFilesFound)
@@ -268,10 +286,12 @@ const DOCXToHTMLAsyncHandler = async (
     }
 
     const mathCleaned = useMathCleaner ? mathFixer(html) : html
+
     // make sure that WMF-based LaTeX is reconverted
     const passThroughWMF = mathCleaned
       .replaceAll('math@display', 'math-display')
       .replaceAll('math@inline', 'math-inline')
+
     const cleanedBoxes = useBox ? boxFixer(passThroughWMF) : passThroughWMF
 
     const res = await axios({
@@ -323,11 +343,13 @@ const DOCXToHTMLAndSplitSyncHandler = async (
 
   try {
     const buf = await readFile(filePath)
+
     const { path: tmpDir, cleanup } = await tmp.dir({
       prefix: '_conversion-',
       unsafeCleanup: true,
       dir: process.cwd(),
     })
+
     cleaner = cleanup
     await writeFile(path.join(tmpDir, path.basename(filePath)), buf)
     logger.info(
@@ -341,6 +363,7 @@ const DOCXToHTMLAndSplitSyncHandler = async (
           if (error) {
             reject(error)
           }
+
           resolve(stdout)
         },
       )
@@ -363,6 +386,7 @@ const DOCXToHTMLAndSplitSyncHandler = async (
         [],
         { shell: true },
       )
+
       xsweet.stdout.on('data', data => {
         logger.info(`stdout: ${data}`)
       })
@@ -392,6 +416,7 @@ const DOCXToHTMLAndSplitSyncHandler = async (
       // At this point, look in tmpDir/word/media to see if there are any WMF files there. If so . . .
       logger.info(`${MICROSERVICE_NAME} Checking for WMF files!`)
       const wmfFilesFound = await checkForFiles(`${tmpDir}/word/media/`, '.wmf')
+
       if (wmfFilesFound.length > 0) {
         logger.info('WMF files found, converting...')
         await new Promise((resolve, reject) => {
@@ -406,6 +431,7 @@ const DOCXToHTMLAndSplitSyncHandler = async (
             [],
             { shell: true },
           )
+
           wmfProcess.stdout.on('data', data => {
             logger.info(`stdout: ${data}`)
           })
@@ -425,12 +451,14 @@ const DOCXToHTMLAndSplitSyncHandler = async (
             resolve(code)
           })
         })
+
         // Check if we have .xml files in the tmpDir/word/media/tex folder
         // If so, send them to a function that reinserts them.
         const texFilesFound = await checkForFiles(
           `${tmpDir}/word/media/tex/`,
           '.xml',
         )
+
         if (texFilesFound.length > 0) {
           logger.info('TeX files generated!')
           html = await reintegrateMathType(html, texFilesFound)
@@ -445,6 +473,7 @@ const DOCXToHTMLAndSplitSyncHandler = async (
       const chtml = `<container id='main'>${$(element).html()}</container>`
       const content = imagesHandler(chtml)
       const mathCleaned = useMathCleaner ? mathFixer(content) : content
+
       const passThroughWMF = mathCleaned
         .replaceAll('math@display', 'math-display')
         .replaceAll('math@inline', 'math-inline')
@@ -460,6 +489,7 @@ const DOCXToHTMLAndSplitSyncHandler = async (
     if (cleaner) {
       await cleaner()
     }
+
     await fs.remove(filePath)
   }
 }
@@ -471,6 +501,7 @@ const DOCXToHTMLAndSplitAsyncHandler = async (
   useBox = undefined,
 ) => {
   const { callbackURL, serviceCallbackTokenId, responseToken } = responseParams
+
   try {
     const chapters = await DOCXToHTMLAndSplitSyncHandler(
       filePath,

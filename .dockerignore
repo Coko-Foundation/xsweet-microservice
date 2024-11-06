@@ -1,11 +1,13 @@
 database
 node_modules
 temp
-.*
 config/*.env
-*.config.*
 docker-compose.yml
 docker-compose.*.yml
 Dockerfile
 logs
 *.log
+
+.yarn/cache
+.yarn/install-state.gz
+!.yarnrc.yml
