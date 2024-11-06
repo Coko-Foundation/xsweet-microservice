@@ -1,3 +1,15 @@
+# [3.0.0](https://gitlab.coko.foundation/cokoapps/xsweet/compare/v2.3.3...v3.0.0) (2024-11-06)
+
+
+### chore
+
+* upgrade to coko server v4 ([635530b](https://gitlab.coko.foundation/cokoapps/xsweet/commit/635530bbdf12a378b0d1a6e46e84e73d6a1d2b8f))
+
+
+### BREAKING CHANGES
+
+* Renamed environment variable PUBSWEET_SECRET to SECRET
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
