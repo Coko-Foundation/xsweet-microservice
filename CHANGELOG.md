@@ -1,3 +1,10 @@
+## [3.0.1](https://gitlab.coko.foundation/cokoapps/xsweet/compare/v3.0.0...v3.0.1) (2024-12-05)
+
+
+### Bug Fixes
+
+* fix hanging create:client script ([00bf032](https://gitlab.coko.foundation/cokoapps/xsweet/commit/00bf032562ca218bfceca1f4e2d3ecb480d5eb53))
+
 # [3.0.0](https://gitlab.coko.foundation/cokoapps/xsweet/compare/v2.3.3...v3.0.0) (2024-11-06)
 
 
