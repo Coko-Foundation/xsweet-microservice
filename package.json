@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@coko/server": "^4.0.2",
-    "@coko/service-auth": "^2.0.1",
+    "@coko/service-auth": "^2.0.2",
     "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.5",
     "fs-extra": "^9.0.1",

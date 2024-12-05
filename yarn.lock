@@ -1526,9 +1526,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@coko/service-auth@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@coko/service-auth@npm:2.0.1"
+"@coko/service-auth@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@coko/service-auth@npm:2.0.2"
   dependencies:
     "@coko/server": "npm:^4.0.0-beta.6"
     bcrypt: "npm:^5.1.1"
@@ -1537,7 +1537,7 @@ __metadata:
     jsonwebtoken: "npm:^9.0.2"
   bin:
     createServiceClient: src/bin/createServiceClient.js
-  checksum: 10c0/db01e24f0bd9fa91e2c65ab7ea84cc9dcccbecc72873857d3978d4ec9aca53a77d236fd164bd6abc66866bf5f107641ab210d92751e98862a43a9b8dfd413e8b
+  checksum: 10c0/fdc3460a339ca50233cd68c75b3304d195dad56e58cf295c15fcd86ff531593ce786836ea1a2f4c139b7a6d9373da9bf5028a93f4ab00e81df7645d895e710d3
   languageName: node
   linkType: hard
 
@@ -1547,7 +1547,7 @@ __metadata:
   dependencies:
     "@coko/lint": "npm:^2.1.0"
     "@coko/server": "npm:^4.0.2"
-    "@coko/service-auth": "npm:^2.0.1"
+    "@coko/service-auth": "npm:^2.0.2"
     axios: "npm:^0.21.1"
     cheerio: "npm:^1.0.0-rc.5"
     fs-extra: "npm:^9.0.1"
