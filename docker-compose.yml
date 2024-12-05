@@ -23,8 +23,6 @@ services:
 
   db:
     image: postgres:16-alpine
-    ports:
-      - ${POSTGRES_PORT:-5432}:5432
     environment:
       - POSTGRES_DB=${POSTGRES_DB:-xsweet_dev_db}
       - POSTGRES_USER=${POSTGRES_USER:-xsweet_user_dev}

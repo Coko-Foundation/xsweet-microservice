@@ -24,7 +24,7 @@ COPY --chown=node:node .yarnrc.yml .
 COPY --chown=node:node package.json ./package.json
 COPY --chown=node:node yarn.lock ./yarn.lock
 
-RUN yarn install --immutable
+RUN yarn workspaces focus --production && yarn cache clean && rm -rf ~/.npm
 
 COPY --chown=node:node . .
 

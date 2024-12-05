@@ -1,3 +1,6 @@
+# This file is meant for running a production build LOCALLY.
+# If you use the xsweet microservice in production, use the pre-built image cokoapps/xsweet
+
 services:
   server:
     build:
@@ -7,10 +10,17 @@ services:
       - ${SERVER_PORT:-3000}:${SERVER_PORT:-3000}
     environment:
       - NODE_ENV=production
-      - SECRET=${SECRET}
-      - SERVER_PORT=${SERVER_PORT}
-      - POSTGRES_HOST=${POSTGRES_HOST}
-      - POSTGRES_PORT=${POSTGRES_PORT}
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - SECRET=${SECRET:-dev_secret}
+      - SERVER_PORT=${SERVER_PORT:-3000}
+      - POSTGRES_HOST=${POSTGRES_HOST:-db}
+      - POSTGRES_PORT=${POSTGRES_PORT:-5432}
+      - POSTGRES_DB=${POSTGRES_DB:-xsweet_dev_db}
+      - POSTGRES_USER=${POSTGRES_USER:-xsweet_user_dev}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-secretpassword}
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-xsweet_dev_db}
+      - POSTGRES_USER=${POSTGRES_USER:-xsweet_user_dev}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-secretpassword}

@@ -6,6 +6,10 @@ module.exports = {
       {
         releaseRules: [
           {
+            type: 'build',
+            release: 'patch',
+          },
+          {
             type: 'revert',
             release: 'patch',
           },
