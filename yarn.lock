@@ -1461,9 +1461,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@coko/server@npm:^4.0.0-beta.6, @coko/server@npm:^4.0.2":
-  version: 4.0.2
-  resolution: "@coko/server@npm:4.0.2"
+"@coko/server@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "@coko/server@npm:4.3.0"
   dependencies:
     "@apollo/server": "npm:^4.10.4"
     "@aws-sdk/client-s3": "npm:^3.577.0"
@@ -1522,22 +1522,22 @@ __metadata:
     ws: "npm:^8.18.0"
   bin:
     coko-server: ./src/cli/coko-server.js
-  checksum: 10c0/7d3bfd82c9bd93ef078d78b707c90251ce4f498e7600eea0a94c1ddab4f8517a678705d201c5957eb9ed514d3227f1d83f83d4f65d3de58851e30bac80f47059
+  checksum: 10c0/5a5d299460ae5cd58fb81b28560c666e97885446eb038bf7caaaccced36fa267dc545e75265ef8f5164751d146beb31495e750ca88f93e5ce7c2d4fa6ec2f93a
   languageName: node
   linkType: hard
 
-"@coko/service-auth@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "@coko/service-auth@npm:2.0.2"
+"@coko/service-auth@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "@coko/service-auth@npm:2.0.3"
   dependencies:
-    "@coko/server": "npm:^4.0.0-beta.6"
+    "@coko/server": "npm:^4.3.0"
     bcrypt: "npm:^5.1.1"
     config: "npm:^3.3.11"
     crypto-random-string: "npm:^3.3.0"
     jsonwebtoken: "npm:^9.0.2"
   bin:
     createServiceClient: src/bin/createServiceClient.js
-  checksum: 10c0/fdc3460a339ca50233cd68c75b3304d195dad56e58cf295c15fcd86ff531593ce786836ea1a2f4c139b7a6d9373da9bf5028a93f4ab00e81df7645d895e710d3
+  checksum: 10c0/68bec53b33961e7874d6e7d1376b070685b4da9f2affa910d1af148b5891469e7c9154687de25b9622097b97dc3419d5dd2e72af4120ee456808940fa17f12db
   languageName: node
   linkType: hard
 
@@ -1546,8 +1546,8 @@ __metadata:
   resolution: "@coko/xsweet@workspace:."
   dependencies:
     "@coko/lint": "npm:^2.1.0"
-    "@coko/server": "npm:^4.0.2"
-    "@coko/service-auth": "npm:^2.0.2"
+    "@coko/server": "npm:^4.3.0"
+    "@coko/service-auth": "npm:^2.0.3"
     axios: "npm:^0.21.1"
     cheerio: "npm:^1.0.0-rc.5"
     fs-extra: "npm:^9.0.1"

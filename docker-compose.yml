@@ -16,6 +16,8 @@ services:
       - POSTGRES_DB=${POSTGRES_DB:-xsweet_dev_db}
       - POSTGRES_USER=${POSTGRES_USER:-xsweet_user_dev}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-secretpassword}
+      - POSTGRES_ALLOW_SELF_SIGNED_CERTIFICATES=${POSTGRES_ALLOW_SELF_SIGNED_CERTIFICATES}
+      - POSTGRES_CA_CERT=${POSTGRES_CA_CERT}
     command: ['yarn', 'coko-server', 'start-dev']
     volumes:
       - ./server:/home/node/xsweet/server
