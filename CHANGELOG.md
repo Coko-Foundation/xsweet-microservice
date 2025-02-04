@@ -1,3 +1,10 @@
+## [3.0.3](https://gitlab.coko.foundation/cokoapps/xsweet/compare/v3.0.2...v3.0.3) (2025-02-04)
+
+
+### Bug Fixes
+
+* fix postgres ssl connections ([cc8c633](https://gitlab.coko.foundation/cokoapps/xsweet/commit/cc8c633ceb81cf5bcdee54aad75165468c686f9c))
+
 ## [3.0.2](https://gitlab.coko.foundation/cokoapps/xsweet/compare/v3.0.1...v3.0.2) (2024-12-05)
 
 ## [3.0.1](https://gitlab.coko.foundation/cokoapps/xsweet/compare/v3.0.0...v3.0.1) (2024-12-05)
