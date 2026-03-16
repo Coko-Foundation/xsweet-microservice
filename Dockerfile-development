@@ -9,9 +9,9 @@ RUN corepack enable
 
 WORKDIR /home/node/xsweet
 # Download XSweet
-RUN wget https://gitlab.coko.foundation/XSweet/XSweet/-/archive/3.0/XSweet-3.0.zip -O xsweet.zip; unzip xsweet.zip; rm xsweet.zip
-RUN wget https://gitlab.coko.foundation/XSweet/editoria_typescript/-/archive/3.0/editoria_typescript-3.0.zip -O typescript.zip; unzip typescript.zip; rm typescript.zip
-RUN wget https://gitlab.coko.foundation/XSweet/HTMLevator/-/archive/3.0/HTMLevator-3.0.zip -O htmlevator.zip; unzip htmlevator.zip; rm htmlevator.zip
+RUN wget https://github.com/Coko-Foundation/XSweet/archive/3.0.zip -O xsweet.zip; unzip xsweet.zip; rm xsweet.zip
+RUN wget https://github.com/Coko-Foundation/editoria_typescript/archive/3.0.zip -O typescript.zip; unzip typescript.zip; rm typescript.zip
+RUN wget https://github.com/Coko-Foundation/HTMLevator/archive/3.0.zip -O htmlevator.zip; unzip htmlevator.zip; rm htmlevator.zip
 
 # Download Saxon
 RUN wget "https://sourceforge.net/projects/saxon/files/Saxon-HE/10/Java/SaxonHE10-3J.zip/download" -O saxon.zip; unzip saxon.zip -d saxon; rm saxon.zip
