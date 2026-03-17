@@ -23,17 +23,7 @@ module.exports = {
     '@semantic-release/release-notes-generator',
     '@semantic-release/changelog',
     '@semantic-release/git',
-    [
-      '@semantic-release/gitlab',
-      {
-        assets: [
-          {
-            label: 'Dockerhub release',
-            url: 'https://hub.docker.com/r/cokoapps/xsweet/tags',
-          },
-        ],
-      },
-    ],
+    '@semantic-release/github',
     [
       '@semantic-release/exec',
       {
