@@ -1,0 +1,55 @@
+name: Release
+
+on:
+  push:
+    # branches: [main]
+
+permissions:
+  contents: write # semantic-release creates tags/releases/commits
+  issues: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    container:
+      image: cokoapps/release-docker:20
+
+    # Equivalent of `services: docker:27-dind` + DOCKER_HOST
+    # services:
+    #   docker:
+    #     image: docker:27-dind
+    #     options: --privileged
+    #     ports:
+    #       - 2375:2375
+
+    # env:
+    #   DOCKER_HOST: tcp://docker:2375
+    #   DOCKER_TLS_CERTDIR: ''
+
+    #   GIT_AUTHOR_NAME: ${{ secrets.RELEASE_BOT_NAME }}
+    #   GIT_AUTHOR_EMAIL: ${{ secrets.RELEASE_BOT_EMAIL }}
+    #   GIT_COMMITTER_NAME: ${{ secrets.RELEASE_BOT_NAME }}
+    #   GIT_COMMITTER_EMAIL: ${{ secrets.RELEASE_BOT_EMAIL }}
+
+    #   # semantic-release on GitHub expects GITHUB_TOKEN (or GH_TOKEN)
+    #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    #   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+    #   DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # semantic-release needs full history + tags
+
+      - name: Test
+        run: |
+          node -v
+          docker info
+
+      # - name: Docker login
+      #   run: docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
+
+      # - name: Release
+      #   run: npx semantic-release
