@@ -23,7 +23,8 @@ jobs:
     #     ports:
     #       - 2375:2375
 
-    # env:
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     #   DOCKER_HOST: tcp://docker:2375
     #   DOCKER_TLS_CERTDIR: ''
 
@@ -46,7 +47,6 @@ jobs:
       - name: Test
         run: |
           node -v
-          docker info
 
       # - name: Docker login
       #   run: docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
