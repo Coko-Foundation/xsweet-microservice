@@ -1,3 +1,10 @@
+## [3.0.4](https://github.com/Coko-Foundation/xsweet-microservice/compare/v3.0.3...v3.0.4) (2026-03-17)
+
+
+### Bug Fixes
+
+* update xsweet links and add github ci ([964f955](https://github.com/Coko-Foundation/xsweet-microservice/commit/964f95507e883237ab2c167de89ad5450d076516))
+
 ## [3.0.3](https://gitlab.coko.foundation/cokoapps/xsweet/compare/v3.0.2...v3.0.3) (2025-02-04)
 
 
