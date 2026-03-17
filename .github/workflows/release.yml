@@ -12,8 +12,8 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
-    container:
-      image: cokoapps/release-docker:20
+    # container:
+    #   image: cokoapps/release-docker:20
 
     # Equivalent of `services: docker:27-dind` + DOCKER_HOST
     # services:
