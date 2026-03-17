@@ -4,6 +4,9 @@ on:
   push:
     # branches: [main]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 permissions:
   contents: write # semantic-release creates tags/releases/commits
   issues: write
@@ -23,8 +26,7 @@ jobs:
     #     ports:
     #       - 2375:2375
 
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    # env:
     #   DOCKER_HOST: tcp://docker:2375
     #   DOCKER_TLS_CERTDIR: ''
 
