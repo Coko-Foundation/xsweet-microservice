@@ -4,8 +4,8 @@ on:
   push:
     # branches: [main]
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+# env:
+#   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 permissions:
   contents: write # semantic-release creates tags/releases/commits
@@ -45,6 +45,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # semantic-release needs full history + tags
+
+      - name: Setup Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
 
       - name: Test
         run: |
